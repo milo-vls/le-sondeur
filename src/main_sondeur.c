@@ -39,7 +39,6 @@ main (void)
 
         while (!WindowShouldClose ())
         {
-                update (&world);
         }
         CloseWindow ();
         return 1;
