@@ -14,6 +14,7 @@ typedef enum GAME_STATE
 typedef struct World
 {
         GAME_STATE game_state;
+        Linked_list layers;
 } World;
 
 void
@@ -29,16 +30,17 @@ main (void)
 {
         InitWindow (GAME_WIDTH, GAME_HEIGHT, "Le sondeur.");
         SetTargetFPS (60);
-        World world = { .game_state = GAME_STATE_TITLE_SCREEN };
-
         Linked_list layers = { sizeof (Layer), NULL };
         Layer *gui_layer_ptr = (Layer *)(malloc (sizeof (Layer)));
         *gui_layer_ptr
             = (Layer){ 0, LoadRenderTexture (GAME_WIDTH, GAME_HEIGHT) };
         add_layer (&layers, gui_layer_ptr);
+        World world
+            = { .game_state = GAME_STATE_TITLE_SCREEN, .layers = layers };
 
         while (!WindowShouldClose ())
         {
+                update (&world);
         }
         CloseWindow ();
         return 1;
