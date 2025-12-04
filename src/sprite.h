@@ -19,4 +19,7 @@ typedef struct Sprite
         Animation animation;
 } Sprite;
 
+void draw_sprite_at (Sprite sprite, unsigned int image_index);
+void draw_sprite (Sprite sprite);
+
 #endif
