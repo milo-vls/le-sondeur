@@ -19,14 +19,21 @@ typedef struct World
 } World;
 
 void
-update (World *world)
+draw_game (World *world)
 {
-        BeginDrawing ();
-        ClearBackground (PURPLE);
-
-        EndDrawing ();
+        BeginDrawing();
+        ClearBackground(WHITE);
+        draw_layers(&world->layers);
+        EndDrawing();
 }
 
+void
+update (World *world)
+{
+        clear_layers(&world->layers);
+
+        draw_game(world);
+}
 int
 main (void)
 {
