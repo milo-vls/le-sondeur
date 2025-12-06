@@ -78,5 +78,6 @@ clear_layers (Linked_list *layers)
                 BeginTextureMode(selected_layer->render_texture_2d);
                 ClearBackground(BLANK);
                 EndTextureMode();
+                selected_node = selected_node->next_node;
         }
 }
