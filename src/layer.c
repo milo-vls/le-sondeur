@@ -71,5 +71,12 @@ draw_layers (Linked_list *layers)
 void
 clear_layers (Linked_list *layers)
 {
-        // TO DO
+        Linked_node *selected_node = layers->first_node;
+        while (selected_node != NULL)
+        {
+                Layer *selected_layer = (Layer *)selected_node->data;
+                BeginTextureMode(selected_layer->render_texture_2d);
+                ClearBackground(BLANK);
+                EndTextureMode();
+        }
 }
