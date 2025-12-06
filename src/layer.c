@@ -1,5 +1,6 @@
 #include "layer.h"
 #include "linked_list.h"
+#include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -50,4 +51,25 @@ add_layer (Linked_list *linked_list, Layer *layer)
         }
         // end of list reached
         previous_node->next_node = new_node;
+}
+
+void
+draw_layers (Linked_list *layers)
+{
+        Linked_node *selected_node = layers->first_node;
+
+        while (selected_node != NULL)
+        {
+                Layer *selected_layer = (Layer *)selected_node->data;
+
+                DrawTexture (selected_layer->render_texture_2d.texture, 0, 0,
+                             WHITE);
+                selected_node = selected_node->next_node;
+        }
+}
+
+void
+clear_layers (Linked_list *layers)
+{
+        // TO DO
 }

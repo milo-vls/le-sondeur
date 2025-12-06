@@ -10,5 +10,6 @@ typedef struct Layer
 } Layer;
 
 void add_layer (Linked_list *linked_list, Layer *layer);
-
+void draw_layers (Linked_list *layers);
+void clear_layers (Linked_list *layers);
 #endif /*LAYER_H*/
