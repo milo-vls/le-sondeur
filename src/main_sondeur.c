@@ -3,20 +3,11 @@
 #include "sprite.h"
 #include <raylib.h>
 #include <stdlib.h>
+#include "game_states.h"
 
 #define GAME_WIDTH 800
 #define GAME_HEIGHT 800
 
-typedef enum GAME_STATE
-{
-        GAME_STATE_TITLE_SCREEN,
-} GAME_STATE;
-
-typedef struct World
-{
-        GAME_STATE game_state;
-        Linked_list layers;
-} World;
 
 void
 draw_game (World *world)
@@ -31,7 +22,12 @@ void
 update (World *world)
 {
         clear_layers(&world->layers);
-
+        switch (world->game_state)
+        {
+                case GAME_STATE_TITLE_SCREEN :
+                
+                break;        
+        }
         draw_game(world);
 }
 int
