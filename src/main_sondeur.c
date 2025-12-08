@@ -1,34 +1,33 @@
+#include "game_states.h"
 #include "layer.h"
 #include "linked_list.h"
 #include "sprite.h"
 #include <raylib.h>
 #include <stdlib.h>
-#include "game_states.h"
 
 #define GAME_WIDTH 800
 #define GAME_HEIGHT 800
 
-
 void
 draw_game (World *world)
 {
-        BeginDrawing();
-        ClearBackground(WHITE);
-        draw_layers(&world->layers);
-        EndDrawing();
+        BeginDrawing ();
+        ClearBackground (WHITE);
+        draw_layers (&world->layers);
+        EndDrawing ();
 }
 
 void
 update (World *world)
 {
-        clear_layers(&world->layers);
+        clear_layers (&world->layers);
         switch (world->game_state)
         {
-                case GAME_STATE_TITLE_SCREEN :
-                
-                break;        
+        case GAME_STATE_TITLE_SCREEN:
+
+                break;
         }
-        draw_game(world);
+        draw_game (world);
 }
 int
 main (void)
