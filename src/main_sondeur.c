@@ -1,3 +1,4 @@
+#include "dimensions.h"
 #include "game_states.h"
 #include "layer.h"
 #include "linked_list.h"
@@ -5,8 +6,11 @@
 #include <raylib.h>
 #include <stdlib.h>
 
-#define GAME_WIDTH 800
-#define GAME_HEIGHT 800
+void
+button_method_place_holder (World *world)
+{
+        // placeholder
+}
 
 int
 main (void)
@@ -26,10 +30,14 @@ main (void)
         };
         sprite.animation
             = (Animation){ sprite.texture.height, 309, 0, 0, 3, 3, 3 };
-
+        world.basic_menu = create_basic_menu ();
+        Button button
+            = (Button){ (Vector2){ GAME_HEIGHT / 2.0, GAME_WIDTH / 2.0 },
+                        sprite, sprite };
+        basic_menu_add_button (BACKGROUND_MENU_DEPTH, button,
+                               button_method_place_holder, world.basic_menu);
         while (!WindowShouldClose ())
         {
-
                 BeginTextureMode (gui_layer_ptr->render_texture_2d);
                 draw_sprite (&sprite,
                              (Vector2){ (float)GetRenderHeight () / 2,
