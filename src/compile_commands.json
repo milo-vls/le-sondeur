@@ -1,0 +1,92 @@
+[
+  {
+    "arguments": [
+      "/usr/sbin/clang",
+      "-Wall",
+      "-Wextra",
+      "-g",
+      "-O0",
+      "-I",
+      ".",
+      "-c",
+      "-o",
+      "main_sondeur.o",
+      "main_sondeur.c"
+    ],
+    "directory": "/home/milo/gamedev/c/le-sondeur/src",
+    "file": "/home/milo/gamedev/c/le-sondeur/src/main_sondeur.c",
+    "output": "/home/milo/gamedev/c/le-sondeur/src/main_sondeur.o"
+  },
+  {
+    "arguments": [
+      "/usr/sbin/clang",
+      "-Wall",
+      "-Wextra",
+      "-g",
+      "-O0",
+      "-I",
+      ".",
+      "-c",
+      "-o",
+      "game_states.o",
+      "game_states.c"
+    ],
+    "directory": "/home/milo/gamedev/c/le-sondeur/src",
+    "file": "/home/milo/gamedev/c/le-sondeur/src/game_states.c",
+    "output": "/home/milo/gamedev/c/le-sondeur/src/game_states.o"
+  },
+  {
+    "arguments": [
+      "/usr/sbin/clang",
+      "-Wall",
+      "-Wextra",
+      "-g",
+      "-O0",
+      "-I",
+      ".",
+      "-c",
+      "-o",
+      "asset/sprite.o",
+      "asset/sprite.c"
+    ],
+    "directory": "/home/milo/gamedev/c/le-sondeur/src",
+    "file": "/home/milo/gamedev/c/le-sondeur/src/asset/sprite.c",
+    "output": "/home/milo/gamedev/c/le-sondeur/src/asset/sprite.o"
+  },
+  {
+    "arguments": [
+      "/usr/sbin/clang",
+      "-Wall",
+      "-Wextra",
+      "-g",
+      "-O0",
+      "-I",
+      ".",
+      "-c",
+      "-o",
+      "basic-menu/basic_menu.o",
+      "basic-menu/basic_menu.c"
+    ],
+    "directory": "/home/milo/gamedev/c/le-sondeur/src",
+    "file": "/home/milo/gamedev/c/le-sondeur/src/basic-menu/basic_menu.c",
+    "output": "/home/milo/gamedev/c/le-sondeur/src/basic-menu/basic_menu.o"
+  },
+  {
+    "arguments": [
+      "/usr/sbin/clang",
+      "-Wall",
+      "-Wextra",
+      "-g",
+      "-O0",
+      "-I",
+      ".",
+      "-c",
+      "-o",
+      "utils-and-ds/linked_list.o",
+      "utils-and-ds/linked_list.c"
+    ],
+    "directory": "/home/milo/gamedev/c/le-sondeur/src",
+    "file": "/home/milo/gamedev/c/le-sondeur/src/utils-and-ds/linked_list.c",
+    "output": "/home/milo/gamedev/c/le-sondeur/src/utils-and-ds/linked_list.o"
+  }
+]

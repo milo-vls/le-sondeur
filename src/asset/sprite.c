@@ -28,3 +28,13 @@ draw_sprite (Sprite *sprite, Vector2 position)
 {
         draw_sprite_image (sprite, sprite->current_image_index, position);
 }
+
+Sprite
+create_sprite (Texture2D texture, Animation animation, unsigned int fps)
+{
+        return (Sprite){ .animation = animation,
+                         .texture = texture,
+                         .fps = fps,
+                         .accumulated_time = 0.0f,
+                         .current_image_index = 0 };
+}

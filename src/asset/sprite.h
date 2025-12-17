@@ -27,4 +27,7 @@ void draw_sprite_image (Sprite *sprite, unsigned int image_index,
                         Vector2 position);
 void draw_sprite (Sprite *sprite, Vector2 position);
 
+Sprite create_sprite (Texture2D texture, Animation animation,
+                      unsigned int fps);
+
 #endif
