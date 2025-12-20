@@ -1,3 +1,4 @@
+#include "basic-menu/title_screen.h"
 #include "dimensions.h"
 #include "game_states.h"
 #include <raylib.h>
@@ -5,8 +6,8 @@
 World
 init_wolrd ()
 {
-
-        return (World){ .game_state = GAME_STATE_BASIC_MENU };
+        return (World){ .game_state = GAME_STATE_BASIC_MENU,
+                        .basic_menu = load_title_screen () };
 }
 
 int

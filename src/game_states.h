@@ -7,6 +7,7 @@
 typedef enum GAME_STATE
 {
         GAME_STATE_BASIC_MENU,
+        GAME_STATE_PLAY
 } GAME_STATE;
 
 typedef struct World

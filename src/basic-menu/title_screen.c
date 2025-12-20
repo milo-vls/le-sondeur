@@ -4,15 +4,19 @@
 #include "dimensions.h"
 #include "game_states.h"
 #include <raylib.h>
-
-#define TITLE_SCREEN_QUIT_BUTTON_X_POS (GAME_WIDTH / 8.0f * 5.0f)
-#define TITLE_SCREEN_QUIT_BUTTON_Y_POS (GAME_HEIGHT / 8.0f * 1.0f)
+#include <stdio.h>
 
 void
 title_screen_quit_game (World *world)
 {
         world->game_state = GAME_STATE_BASIC_MENU;
         CloseWindow ();
+}
+
+void
+title_screen_play (World *world)
+{
+        world->game_state = 0;
 }
 
 Basic_menu
@@ -24,14 +28,23 @@ load_title_screen ()
         Vector2 quit_button_position
             = { (float)TITLE_SCREEN_QUIT_BUTTON_X_POS,
                 (float)TITLE_SCREEN_QUIT_BUTTON_Y_POS };
-        Sprite quit_button_sprite
-            = { .texture
-                = LoadTexture ("../ressources/button/jouer/jouer_ss.png"),
-                .accumulated_time = 0.0f,
-                .} Button quit_button
-            = (Button){ .position = quit_button_position, .sprite = };
+        printf ("Working directory: %s\n", GetWorkingDirectory ());
+        Sprite quit_button_sprite = create_sprite_auto_h_animation (
+            LoadTexture ("ressources/buttons/jouer/jouer_ss.png"), 3, 3);
+        Button quit_button = (Button){ .position = quit_button_position,
+                                       .sprite = quit_button_sprite,
+                                       .sprite_hovered = quit_button_sprite };
+        // play button
+        Vector2 play_button_position
+            = { .x = (float)TITLE_SCREEN_QUIT_BUTTON_X_POS,
+                .y = TITLE_SCREEN_QUIT_BUTTON_Y_POS };
+        Button play_button = (Button){ .position = play_button_position,
+                                       .sprite = quit_button_sprite,
+                                       .sprite_hovered = quit_button_sprite };
 
-        basic_menu_add_button (, Button button, Button_method button_method,
-                               Basic_menu * basic_menu);
+        basic_menu_add_button (TITLE_SCREEN_MENU_DEPTH, quit_button,
+                               title_screen_quit_game, &title_screen);
+        basic_menu_add_button (TITLE_SCREEN_MENU_DEPTH, play_button,
+                               title_screen_play, &title_screen);
         return title_screen;
 }

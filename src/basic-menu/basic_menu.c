@@ -1,6 +1,7 @@
 #include "basic-menu/basic_menu.h"
 #include "dimensions.h"
 #include <raylib.h>
+#include <stdio.h>
 
 bool
 point_in_button (Button *button, Vector2 point_position)
@@ -91,14 +92,6 @@ update_basic_menu_texture (Basic_menu *basic_menu)
         EndTextureMode ();
 }
 void
-update_basic_menu (Basic_menu *basic_menu)
-{
-        clear_basic_menu_renderers (basic_menu);
-        draw_buttons_and_update_button_state (basic_menu);
-        update_basic_menu_texture (basic_menu);
-}
-
-void
 draw_menu_on_screen (Basic_menu *basic_menu)
 {
         Rectangle source = (Rectangle){ .x = 0,
@@ -111,4 +104,12 @@ draw_menu_on_screen (Basic_menu *basic_menu)
                                       .height = (float)GAME_HEIGHT };
         DrawTexturePro (basic_menu->menu_render.texture, source, dest,
                         (Vector2){ 0., 0. }, 0.0f, WHITE);
+}
+void
+update_basic_menu (Basic_menu *basic_menu)
+{
+        clear_basic_menu_renderers (basic_menu);
+        draw_buttons_and_update_button_state (basic_menu);
+        update_basic_menu_texture (basic_menu);
+        draw_menu_on_screen (basic_menu);
 }
