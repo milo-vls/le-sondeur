@@ -18,7 +18,6 @@ typedef struct Sprite
 {
         Texture2D texture;
         Animation animation;
-        unsigned int fps;
         float accumulated_time;
         unsigned int current_image_index;
 } Sprite;
@@ -27,8 +26,7 @@ void draw_sprite_image (Sprite *sprite, unsigned int image_index,
                         Vector2 position);
 void draw_sprite (Sprite *sprite, Vector2 position);
 
-Sprite create_sprite (Texture2D texture, Animation animation,
-                      unsigned int fps);
+Sprite create_sprite (Texture2D texture, Animation animation);
 Sprite create_sprite_auto_h_animation (Texture2D texture, unsigned int fps,
                                        unsigned int image_count);
 #endif

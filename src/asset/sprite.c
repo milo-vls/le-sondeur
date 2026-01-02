@@ -8,7 +8,9 @@ draw_sprite_image (Sprite *sprite, unsigned int image_index, Vector2 position)
         Animation anim = sprite->animation;
         float image_width = anim.image_width;
         float image_height = anim.image_height;
+        //
         div_t image_row_col = div (image_index, anim.image_count_per_row);
+
         float source_x = anim.first_image_x + image_row_col.rem * image_width;
         float source_y
             = anim.first_image_y + image_row_col.quot * image_height;
@@ -25,8 +27,27 @@ draw_sprite_image (Sprite *sprite, unsigned int image_index, Vector2 position)
 }
 
 void
+sprite_set_next_image_index (Sprite *sprite)
+{
+        if (sprite->current_image_index >= sprite->animation.image_count - 1)
+        {
+                sprite->current_image_index = 0;
+                return;
+        }
+        sprite->current_image_index ++;
+}
+
+void
 draw_sprite (Sprite *sprite, Vector2 position)
 {
+        float fps = (float) sprite->animation.fps;
+        float seconds_between_images = 1.0f / fps;
+        sprite->accumulated_time += GetFrameTime();
+        while (sprite->accumulated_time > seconds_between_images)
+        {
+                sprite_set_next_image_index(sprite);
+                sprite->accumulated_time -= seconds_between_images;
+        }
         draw_sprite_image (sprite, sprite->current_image_index, position);
 }
 
@@ -46,11 +67,10 @@ create_animation (float first_image_x, float first_image_y,
 }
 
 Sprite
-create_sprite (Texture2D texture, Animation animation, unsigned int fps)
+create_sprite (Texture2D texture, Animation animation)
 {
         return (Sprite){ .animation = animation,
                          .texture = texture,
-                         .fps = fps,
                          .accumulated_time = 0.0f,
                          .current_image_index = 0 };
 }
@@ -67,5 +87,5 @@ create_sprite_auto_h_animation (Texture2D texture, unsigned int fps,
                            .image_count = image_count,
                            .image_count_per_row = image_count,
                            .fps = fps };
-        return create_sprite (texture, anim, fps);
+        return create_sprite (texture, anim);
 }

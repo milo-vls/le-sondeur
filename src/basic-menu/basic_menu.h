@@ -19,6 +19,12 @@ typedef enum BASIC_MENU_DEPTHS
 
 typedef struct
 {
+        BASIC_MENU_DEPTHS depth;
+        int index;
+} Button_index;
+
+typedef struct
+{
         int hovered_button_index;
         int pressed_button_index;
         int clicked_button_index;
