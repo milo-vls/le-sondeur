@@ -66,10 +66,10 @@ basic_menu_hovered_button_index (Basic_menu *basic_menu)
 }
 
 void
-draw_buttons_and_update_button_state (Basic_menu *basic_menu)
+draw_buttons_and_update_button_state (Basic_menu *basic_menu, Button_index hovered_button_index)
 {
-        // optimisations possibles
-        Button_index hovered_button_index = basic_menu_hovered_button_index (basic_menu);
+        //draw buttons
+        //modularisation possible (basic_menu_draw_depth_buttons)
         for (int i_depth = 0; i_depth < NB_BASIC_MENU_DEPTHS; i_depth++)
         {
                 BeginTextureMode (basic_menu->render_textures[i_depth]);
@@ -87,8 +87,29 @@ draw_buttons_and_update_button_state (Basic_menu *basic_menu)
                 }
                 EndTextureMode ();
         }
+        //click handler
 }
-
+bool
+basic_menu_click_handler (Basic_menu *basic_menu, Button_index hovered_button)
+{
+        if (hovered_button.index == -1)
+        {
+                basic_menu->pressed_button_index = (Button_index) {-1, -1};
+                return false;
+        }
+        //what is being pressed is not what is being hovered
+        if (basic_menu->pressed_button_index.depth != hovered_button.depth 
+                || basic_menu->pressed_button_index.index != hovered_button.index)
+        {
+                basic_menu->pressed_button_index = (Button_index) {-1, -1};
+                return false;
+        }
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+                basic_menu->pressed_button_index = hovered_button;
+        if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON) && basic_menu->pressed_button_index.index > -1)
+                return true;
+        return false;
+}
 void
 clear_basic_menu_renderers (Basic_menu *basic_menu)
 {
@@ -98,7 +119,7 @@ clear_basic_menu_renderers (Basic_menu *basic_menu)
         for (int i_depth = 0; i_depth < NB_BASIC_MENU_DEPTHS; i_depth++)
         {
                 BeginTextureMode (basic_menu->render_textures[i_depth]);
-                ClearBackground (BLANK);
+                ClearBackground (BLACK);
                 EndTextureMode ();
         }
 }
@@ -111,6 +132,7 @@ update_basic_menu_texture (Basic_menu *basic_menu)
                              0, WHITE);
         EndTextureMode ();
 }
+
 void
 draw_menu_on_screen (Basic_menu *basic_menu)
 {
@@ -125,11 +147,15 @@ draw_menu_on_screen (Basic_menu *basic_menu)
         DrawTexturePro (basic_menu->menu_render.texture, source, dest,
                         (Vector2){ 0., 0. }, 0.0f, WHITE);
 }
+
 void
-update_basic_menu (Basic_menu *basic_menu)
+update_basic_menu (Basic_menu *basic_menu, World *world)
 {
         clear_basic_menu_renderers (basic_menu);
-        draw_buttons_and_update_button_state (basic_menu);
+        Button_index hovered_button_index = basic_menu_hovered_button_index(basic_menu);
+        draw_buttons_and_update_button_state (basic_menu, hovered_button_index);
+        if (basic_menu_click_handler(basic_menu, hovered_button_index))
+                basic_menu->button_method[hovered_button_index.depth][hovered_button_index.index](world);
         update_basic_menu_texture (basic_menu);
         draw_menu_on_screen (basic_menu);
 }

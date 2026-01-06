@@ -46,15 +46,16 @@ typedef struct Basic_menu
         RenderTexture2D render_textures[NB_BASIC_MENU_DEPTHS];
         Button buttons[NB_BASIC_MENU_DEPTHS][MAX_NUMBER_OF_BUTTONS];
         Button_method button_method[NB_BASIC_MENU_DEPTHS]
-                                   [MAX_NUMBER_OF_BUTTONS];
+                                   [MAX_NUMBER_OF_BUTTONS];                               
         RenderTexture2D menu_render;
+        Button_index pressed_button_index;
 } Basic_menu;
 
 void basic_menu_add_button (BASIC_MENU_DEPTHS depth, Button button,
                             Button_method button_method,
                             Basic_menu *basic_menu);
 Basic_menu create_basic_menu (int width, int height);
-void update_basic_menu (Basic_menu *basic_menu);
+void update_basic_menu (Basic_menu *basic_menu, World *world);
 void draw_menu_on_screen (Basic_menu *basic_menu);
 void unload_basic_menu (Basic_menu *basic_menu);
 

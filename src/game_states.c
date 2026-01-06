@@ -8,7 +8,7 @@ update (World *world)
         switch (world->game_state)
         {
         case GAME_STATE_BASIC_MENU:
-                update_basic_menu (&world->basic_menu);
+                update_basic_menu (&world->basic_menu, world);
                 break;
         case GAME_STATE_PLAY:
 
