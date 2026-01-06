@@ -5,6 +5,7 @@ void
 update (World *world)
 {
         BeginDrawing ();
+        ClearBackground (BLANK);
         switch (world->game_state)
         {
         case GAME_STATE_BASIC_MENU:

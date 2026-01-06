@@ -52,34 +52,39 @@ basic_menu_add_button (BASIC_MENU_DEPTHS depth, Button button,
 Button_index
 basic_menu_hovered_button_index (Basic_menu *basic_menu)
 {
-        Vector2 mouse_pos = GetMousePosition();
+        Vector2 mouse_pos = GetMousePosition ();
         unsigned int nb_buttons;
-        for (int i_depth = NB_BASIC_MENU_DEPTHS - 1; i_depth >= 0; i_depth --)
+        for (int i_depth = NB_BASIC_MENU_DEPTHS - 1; i_depth >= 0; i_depth--)
         {
                 nb_buttons = basic_menu->nb_buttons[i_depth];
-                for (unsigned int i_button = 0; i_button < nb_buttons; 
-                        i_button ++)
-                        if (point_in_button(&basic_menu->buttons[i_depth][i_button], mouse_pos))
-                                return (Button_index) {.depth = i_depth, .index = i_button};
+                for (unsigned int i_button = 0; i_button < nb_buttons;
+                     i_button++)
+                        if (point_in_button (
+                                &basic_menu->buttons[i_depth][i_button],
+                                mouse_pos))
+                                return (Button_index){ .depth = i_depth,
+                                                       .index = i_button };
         }
-        return (Button_index) {.depth = -1, .index = -1};
+        return (Button_index){ .depth = -1, .index = -1 };
 }
 
 void
-draw_buttons_and_update_button_state (Basic_menu *basic_menu, Button_index hovered_button_index)
+draw_buttons_and_update_button_state (Basic_menu *basic_menu,
+                                      Button_index hovered_button_index)
 {
-        //draw buttons
-        //modularisation possible (basic_menu_draw_depth_buttons)
+        // draw buttons
+        // modularisation possible (basic_menu_draw_depth_buttons)
         for (int i_depth = 0; i_depth < NB_BASIC_MENU_DEPTHS; i_depth++)
         {
                 BeginTextureMode (basic_menu->render_textures[i_depth]);
                 Button *buttons = basic_menu->buttons[i_depth];
-                for ( int i_button = 0;
-                        i_button < (int) basic_menu->nb_buttons[i_depth]; i_button++)
+                for (int i_button = 0;
+                     i_button < (int)basic_menu->nb_buttons[i_depth];
+                     i_button++)
                 {
-                        if (i_depth == (int) hovered_button_index.depth 
-                                && i_button ==  hovered_button_index.index)
-                                draw_sprite (&buttons[i_button].sprite_hovered, 
+                        if (i_depth == (int)hovered_button_index.depth
+                            && i_button == hovered_button_index.index)
+                                draw_sprite (&buttons[i_button].sprite_hovered,
                                              buttons[i_button].position);
                         else
                                 draw_sprite (&buttons[i_button].sprite,
@@ -87,26 +92,27 @@ draw_buttons_and_update_button_state (Basic_menu *basic_menu, Button_index hover
                 }
                 EndTextureMode ();
         }
-        //click handler
+        // click handler
 }
 bool
 basic_menu_click_handler (Basic_menu *basic_menu, Button_index hovered_button)
 {
         if (hovered_button.index == -1)
         {
-                basic_menu->pressed_button_index = (Button_index) {-1, -1};
+                basic_menu->pressed_button_index = (Button_index){ -1, -1 };
                 return false;
         }
-        //what is being pressed is not what is being hovered
-        if (basic_menu->pressed_button_index.depth != hovered_button.depth 
-                || basic_menu->pressed_button_index.index != hovered_button.index)
+        // what is being pressed is not what is being hovered
+        if (basic_menu->pressed_button_index.depth != hovered_button.depth
+            || basic_menu->pressed_button_index.index != hovered_button.index)
         {
-                basic_menu->pressed_button_index = (Button_index) {-1, -1};
+                basic_menu->pressed_button_index = (Button_index){ -1, -1 };
                 return false;
         }
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        if (IsMouseButtonPressed (MOUSE_LEFT_BUTTON))
                 basic_menu->pressed_button_index = hovered_button;
-        if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON) && basic_menu->pressed_button_index.index > -1)
+        if (IsMouseButtonReleased (MOUSE_LEFT_BUTTON)
+            && basic_menu->pressed_button_index.index > -1)
                 return true;
         return false;
 }
@@ -119,7 +125,7 @@ clear_basic_menu_renderers (Basic_menu *basic_menu)
         for (int i_depth = 0; i_depth < NB_BASIC_MENU_DEPTHS; i_depth++)
         {
                 BeginTextureMode (basic_menu->render_textures[i_depth]);
-                ClearBackground (BLACK);
+                ClearBackground (BLANK);
                 EndTextureMode ();
         }
 }
@@ -152,10 +158,13 @@ void
 update_basic_menu (Basic_menu *basic_menu, World *world)
 {
         clear_basic_menu_renderers (basic_menu);
-        Button_index hovered_button_index = basic_menu_hovered_button_index(basic_menu);
-        draw_buttons_and_update_button_state (basic_menu, hovered_button_index);
-        if (basic_menu_click_handler(basic_menu, hovered_button_index))
-                basic_menu->button_method[hovered_button_index.depth][hovered_button_index.index](world);
+        Button_index hovered_button_index
+            = basic_menu_hovered_button_index (basic_menu);
+        draw_buttons_and_update_button_state (basic_menu,
+                                              hovered_button_index);
+        if (basic_menu_click_handler (basic_menu, hovered_button_index))
+                basic_menu->button_method[hovered_button_index.depth]
+                                         [hovered_button_index.index](world);
         update_basic_menu_texture (basic_menu);
         draw_menu_on_screen (basic_menu);
 }
