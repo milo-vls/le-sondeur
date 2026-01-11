@@ -15,6 +15,7 @@ main (void)
 {
         InitWindow (GAME_WIDTH, GAME_HEIGHT, "Le sondeur.");
         SetTargetFPS (60);
+        SetWindowFocused ();
         World world = init_wolrd ();
         while (!WindowShouldClose ())
         {

@@ -1,6 +1,7 @@
 #include "basic-menu/basic_menu.h"
 #include "dimensions.h"
 #include <raylib.h>
+#include <stdio.h>
 
 bool
 point_in_button (Button *button, Vector2 point_position)
@@ -70,10 +71,8 @@ basic_menu_hovered_button_index (Basic_menu *basic_menu)
 
 void
 draw_buttons_and_update_button_state (Basic_menu *basic_menu,
-                                      Button_index hovered_button_index)
+                                      Button_index pressed_button_index)
 {
-        // draw buttons
-        // modularisation possible (basic_menu_draw_depth_buttons)
         for (int i_depth = 0; i_depth < NB_BASIC_MENU_DEPTHS; i_depth++)
         {
                 BeginTextureMode (basic_menu->render_textures[i_depth]);
@@ -82,8 +81,8 @@ draw_buttons_and_update_button_state (Basic_menu *basic_menu,
                      i_button < (int)basic_menu->nb_buttons[i_depth];
                      i_button++)
                 {
-                        if (i_depth == (int)hovered_button_index.depth
-                            && i_button == hovered_button_index.index)
+                        if (i_depth == (int)pressed_button_index.depth
+                            && i_button == pressed_button_index.index)
                                 draw_sprite (&buttons[i_button].sprite_hovered,
                                              buttons[i_button].position);
                         else
@@ -92,30 +91,34 @@ draw_buttons_and_update_button_state (Basic_menu *basic_menu,
                 }
                 EndTextureMode ();
         }
-        // click handler
 }
+
+// returns either hovered button is clicked
+// changes pressed button saved in basic_menu
 bool
 basic_menu_click_handler (Basic_menu *basic_menu, Button_index hovered_button)
 {
-        if (hovered_button.index == -1)
+        if (IsMouseButtonPressed (MOUSE_BUTTON_LEFT))
         {
-                basic_menu->pressed_button_index = (Button_index){ -1, -1 };
-                return false;
-        }
-        // what is being pressed is not what is being hovered
-        if (basic_menu->pressed_button_index.depth != hovered_button.depth
-            || basic_menu->pressed_button_index.index != hovered_button.index)
-        {
-                basic_menu->pressed_button_index = (Button_index){ -1, -1 };
-                return false;
-        }
-        if (IsMouseButtonPressed (MOUSE_LEFT_BUTTON))
                 basic_menu->pressed_button_index = hovered_button;
-        if (IsMouseButtonReleased (MOUSE_LEFT_BUTTON)
-            && basic_menu->pressed_button_index.index > -1)
-                return true;
+                return false;
+        }
+        if (IsMouseButtonReleased (MOUSE_BUTTON_LEFT))
+        {
+                bool hovered_equals_pressed
+                    = basic_menu->pressed_button_index.index
+                          == hovered_button.index
+                      && basic_menu->pressed_button_index.depth
+                             == hovered_button.depth;
+                bool valid_click
+                    = hovered_equals_pressed && hovered_button.index != -1;
+                basic_menu->pressed_button_index = (Button_index){ -1, -1 };
+
+                return valid_click;
+        }
         return false;
 }
+
 void
 clear_basic_menu_renderers (Basic_menu *basic_menu)
 {
@@ -163,8 +166,11 @@ update_basic_menu (Basic_menu *basic_menu, World *world)
         draw_buttons_and_update_button_state (basic_menu,
                                               hovered_button_index);
         if (basic_menu_click_handler (basic_menu, hovered_button_index))
+        {
+                printf ("\nmethode du bouton cliquée\n");
                 basic_menu->button_method[hovered_button_index.depth]
                                          [hovered_button_index.index](world);
+        }
         update_basic_menu_texture (basic_menu);
         draw_menu_on_screen (basic_menu);
 }
