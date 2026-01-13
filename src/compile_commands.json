@@ -88,5 +88,23 @@
     "directory": "/home/milo/gamedev/c/le-sondeur/src",
     "file": "/home/milo/gamedev/c/le-sondeur/src/utils-and-ds/linked_list.c",
     "output": "/home/milo/gamedev/c/le-sondeur/src/utils-and-ds/linked_list.o"
+  },
+  {
+    "arguments": [
+      "/usr/sbin/clang",
+      "-Wall",
+      "-Wextra",
+      "-g",
+      "-O0",
+      "-I",
+      ".",
+      "-c",
+      "-o",
+      "player-controller/player-controller.o",
+      "player-controller/player-controller.c"
+    ],
+    "directory": "/home/milo/gamedev/c/le-sondeur/src",
+    "file": "/home/milo/gamedev/c/le-sondeur/src/utils-and-ds/linked_list.c",
+    "output": "/home/milo/gamedev/c/le-sondeur/src/utils-and-ds/linked_list.o"
   }
 ]

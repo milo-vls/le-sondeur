@@ -9,7 +9,8 @@ SRC = \
     asset/sprite.c \
     basic-menu/basic_menu.c \
     basic-menu/title_screen.c \
-    utils-and-ds/linked_list.c
+    utils-and-ds/linked_list.c \
+    player-controller/player-controller.c
 
 OBJ = $(SRC:.c=.o)
 
