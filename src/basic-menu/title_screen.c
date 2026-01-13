@@ -15,8 +15,8 @@ title_screen_quit_game (World *world)
 void
 title_screen_play (World *world)
 {
-        world->game_state = 0;
-        CloseWindow ();
+        world->game_state = GAME_STATE_PLAY;
+	HideCursor();
 }
 
 Basic_menu

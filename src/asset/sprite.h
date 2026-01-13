@@ -26,6 +26,8 @@ void draw_sprite_image (Sprite *sprite, unsigned int image_index,
                         Vector2 position);
 void draw_sprite (Sprite *sprite, Vector2 position);
 
+void sprite_set_next_image_index (Sprite *sprite);
+
 Sprite create_sprite (Texture2D texture, Animation animation);
 Sprite create_sprite_auto_h_animation (Texture2D texture, unsigned int fps,
                                        unsigned int image_count);
