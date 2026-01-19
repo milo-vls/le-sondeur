@@ -16,12 +16,14 @@ main (void)
 	world.game_state = GAME_STATE_BASIC_MENU;
         world.basic_menu = load_title_screen ();
 
-	Model cake = LoadModel ("ressources/models/cake/cake.obj");
+	game_object cake = init_object ("ressources/models/cake/cake.obj", NULL);
+	Texture2D cake_diffuse = LoadTexture("ressources/models/cake/cake_diffuse.png");
+	SetMaterialTexture (&cake.model.materials[0], MATERIAL_MAP_DIFFUSE, cake_diffuse);
 
-	Texture2D diffuse = LoadTexture("ressources/models/cake/cake_diffuse.png");
-	SetMaterialTexture(&cake.materials[0], MATERIAL_MAP_DIFFUSE, diffuse);
-
-        add_model(&world, cake);
+	game_object test = init_object ("ressources/models/animtest.glb", "ressources/models/animtest.glb");
+	
+	add_object (&world, cake);
+	add_object (&world, test);
 
 	while (!WindowShouldClose ())
         {

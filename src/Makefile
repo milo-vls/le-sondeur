@@ -6,6 +6,7 @@ LIBS = -lraylib -lm -lpthread -ldl -lrt -lX11
 SRC = \
     main_sondeur.c \
     game_states.c \
+    game_objects.c \
     asset/sprite.c \
     basic-menu/basic_menu.c \
     basic-menu/title_screen.c \

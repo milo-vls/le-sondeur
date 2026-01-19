@@ -8,39 +8,38 @@ init_world ()
 {
         return (World){ 
 			.player = init_player (), 
-			.model_count = 0, .model_capacity = 1,
-			.models = (Model*)malloc(sizeof(Model)) };
+			.object_count = 0, 
+			.objects = (game_object*)malloc(sizeof(game_object)) };
 }
 
 
 void
 update_world (World *world)
 {
-        BeginDrawing ();
-        ClearBackground (BLANK);
         switch (world->game_state)
         {
         case GAME_STATE_BASIC_MENU:
-                update_basic_menu (&world->basic_menu, world);
+		BeginDrawing ();
+			ClearBackground (BLANK);
+			update_basic_menu (&world->basic_menu, world);
                 break;
         case GAME_STATE_PLAY:
 		update_player (&world->player);
-		BeginMode3D(world->player.cam);
-		for(size_t i = 0; i < world->model_count; i++) DrawModel(world->models[i], (Vector3) {0.0f, 0.0f, 0.0f}, 1, WHITE);
-		EndMode3D();
+		for(size_t i = 0; i < world->object_count; i++) update_object (&world->objects[i]);
+		BeginDrawing ();
+			ClearBackground (BLANK);
+			BeginMode3D(world->player.cam);
+			for(size_t i = 0; i < world->object_count; i++) DrawModel (world->objects[i].model, (Vector3) {0.0f, 0.0f, 0.0f}, 1, WHITE);
+			EndMode3D();
                 break;
         }
         EndDrawing ();
 }
 
 void 
-add_model (World *world, Model model)
+add_object (World *world, game_object object)
 {
-	if(world->model_count >= world->model_capacity)
-	{
-		world->model_capacity *= 2;
-		world->models = (Model*)realloc(world->models, world->model_capacity * sizeof(Model));
-	}
-	world->models[world->model_count] = model;
-	world->model_count++;
+	world->object_count++;
+	world->objects = (game_object*)realloc(world->objects, world->object_count * sizeof(object));
+	world->objects[world->object_count-1] = object;
 }
