@@ -29,7 +29,7 @@ update_world (World *world)
 		BeginDrawing ();
 			ClearBackground (BLANK);
 			BeginMode3D(world->player.cam);
-			for(size_t i = 0; i < world->object_count; i++) DrawModel (world->objects[i].model, (Vector3) {0.0f, 0.0f, 0.0f}, 1, WHITE);
+			for(size_t i = 0; i < world->object_count; i++) DrawModelEx (world->objects[i].model, (Vector3) world->objects[i].position, world->objects[i].rotation_axis, world->objects[i].rotation_angle, world->objects[i].scale, WHITE);
 			EndMode3D();
                 break;
         }
