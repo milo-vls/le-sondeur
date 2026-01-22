@@ -1,7 +1,14 @@
+#compilateur linux
 CC = clang
 CFLAGS = -Wall -Wextra -g -O0
-
 LIBS = -lraylib -lm -lpthread -ldl -lrt -lX11
+#compilateur windows
+CC_WIN = x86_64-w64-mingw32-gcc
+CFLAGS_WIN = -Wall -Wextra -O2 -std=c99 -static
+LIBS_WIN = -lraylib -lopengl32 -lgdi32 -lwinmm
+
+
+
 
 SRC = \
     main_sondeur.c \
@@ -24,5 +31,8 @@ program: $(OBJ)
 %.o: %.c
 	$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
+windows:
+	$(CC_WIN) $(SRC) $(INC) -o game.exe $(CFLAGS_WIN) $(LIBS_WIN)
+
 clean:
-	rm -f $(OBJ) program
+	rm -f $(OBJ) program game.exe
